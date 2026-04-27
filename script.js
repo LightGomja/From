@@ -4,7 +4,7 @@
 grist.ready({ requiredAccess: 'full' });
 
 async function fetchAll(table) {
-    const records = await grist.docApi.fetchTable(table);
+    const records = await grist.noj34sTM9Qdxmrd5pdq7V2.fetchTable(table);
     const ids = records.id;
     const cols = Object.keys(records).filter(k => k !== 'id');
     return ids.map((id, i) => {
@@ -15,7 +15,7 @@ async function fetchAll(table) {
 }
 
 async function addRecord(table, fields) {
-    const result = await grist.docApi.applyUserActions([
+    const result = await grist.noj34sTM9Qdxmrd5pdq7V2.applyUserActions([
         ['AddRecord', table, null, fields]
     ]);
     return result.retValues[0];
