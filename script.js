@@ -286,23 +286,42 @@ function searchExecs(inputId, resultsId, hiddenId) {
     });
 }
 
-function searchChurches(inputId, resultsId, hiddenId, prefix) {
+function searchContacts(inputId, resultsId, hiddenId, phoneId) {
     const q = document.getElementById(inputId).value.toLowerCase();
     const results = document.getElementById(resultsId);
     document.getElementById(hiddenId).value = '';
-    clearChurchAutofill(prefix);
-    if (q.length < 1) { results.classList.remove('open'); return; }
-    const matches = churchCache.filter(r => r.fields.Church_Name && r.fields.Church_Name.toLowerCase().includes(q));
-    renderResults(results, matches, r => ({
-        main: r.fields.Church_Name,
-        sub: r.fields.Address || ''
-    }), async (r) => {
-        document.getElementById(inputId).value = r.fields.Church_Name;
-        document.getElementById(hiddenId).value = r.id;
+
+    if (q.length < 1) {
         results.classList.remove('open');
-        autofillChurch(r.fields, prefix);
-        await updateVisitBadge(r.id, prefix);
-    }, q);
+        return;
+    }
+
+    const matches = contactCache.filter(r => {
+        const name = r.fields ? r.fields.Full_Name : r.Full_Name;
+        return name && name.toLowerCase().includes(q);
+    });
+
+    renderResults(results, matches, r => {
+        const name = r.fields ? r.fields.Full_Name : r.Full_Name;
+        const phone = r.fields ? r.fields.Phone_number : r.Phone_number;
+
+        return {
+            main: name,
+            sub: phone || ''
+        };
+    }, (r) => {
+        const name = r.fields ? r.fields.Full_Name : r.Full_Name;
+        const phone = r.fields ? r.fields.Phone_number : r.Phone_number;
+
+        document.getElementById(inputId).value = name;
+        document.getElementById(hiddenId).value = r.id;
+
+        if (phoneId && document.getElementById(phoneId)) {
+            document.getElementById(phoneId).value = phone || '';
+        }
+
+        results.classList.remove('open');
+    });
 }
 
 function searchContacts(inputId, resultsId, hiddenId, phoneId) {
