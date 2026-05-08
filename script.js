@@ -294,12 +294,12 @@ function searchExecs(inputId, resultsId, hiddenId) {
   const results = document.getElementById(resultsId);
   document.getElementById(hiddenId).value = '';
   if (q.length < 1) { results.classList.remove('open'); return; }
-  const matches = execCache.filter(r => r.fields.Staff_Name && r.fields.Staff_Name.toLowerCase().includes(q));
+  const matches = execCache.filter(r => r.fields.Name && r.fields.Name.toLowerCase().includes(q));
   renderResults(results, matches, r => ({
-    main: r.fields.Staff_Name,
+    main: r.fields.Name,
     sub: r.fields.Ministry_Area || ''
   }), (r) => {
-    document.getElementById(inputId).value = r.fields.Staff_Name;
+    document.getElementById(inputId).value = r.fields.Name;
     document.getElementById(hiddenId).value = r.id;
     results.classList.remove('open');
   });
@@ -666,9 +666,9 @@ async function submitFieldVisit() {
 async function processFieldVisit(d) {
   let execId = d.execId;
   if (!execId) {
-    const r = await findOrCreate('Field Executive staff',
-      { Staff_Name: d.execName, Phine_Number: '', Ministry_Area: '', gmail_id: '' },
-      f => f.Staff_Name === d.execName
+    const r = await findOrCreate('Staff',
+      { Name: d.execName, Phine_Number: '', Ministry_Area: '', gmail_id: '' },
+      f => f.Name === d.execName
     );
     execId = r.id;
   }
