@@ -1,6 +1,6 @@
 const DOC_ID = 'gtGKiqrdhWXxAuim2H8BwU';
 const API_KEY = '2a16785635fde61f552fed86c669207aef693d5b';
-const BASE = `https://gomja24.getgrist.com/api/docs/gtGKiqrdhWXxAuim2H8BwU`;
+const BASE = `https://gomja24.getgrist.com/api/docs/${DOC_ID}/tables`;
 
 async function fetchAll(table) {
   try {
