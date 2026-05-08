@@ -138,38 +138,45 @@
             <div class="two-col">
               <div class="field">
                 <label data-t="numPeopleLabel">Number of People Met</label>
-                <input type="number" id="fv-numpeople" min="1" placeholder="0" />
+                 <input type="number" id="fv-numpeople" min="1" placeholder="0" />
               </div>
               <div class="field">
                 <label data-t="timeSpentLabel">Time Spent</label>
-                <input type="text" id="fv-timespent" data-t-ph="timeSpentPh" placeholder="e.g. 2 hours" />
+                <input type="text" id="fv-timespent" data-t-ph="timeSpentPh" placeholder="e.g. 1 hour 30 min" />
               </div>
             </div>
-            <div class="two-col">
-              <div class="field">
-                <label data-t="followupLabel">Follow-up Needed</label>
-                <select id="fv-followup">
-                  <option value="No" data-t="no">No</option>
-                  <option value="Yes" data-t="yes">Yes</option>
-                  <option value="Maybe" data-t="maybe">Maybe</option>
-                </select>
-              </div>
               <div class="field">
                 <label data-t="nextActionLabel">Next Planned Action</label>
                 <select id="fv-nextaction">
-                  <option value="No Action" data-t="noAction">No Action</option>
-                  <option value="Return Visit" data-t="returnVisit">Return Visit</option>
+                  <option value="Return Visit" data-t="returnVisit">Follow-up</option>
                   <option value="Send Materials" data-t="sendMaterials">Send Materials</option>
-                  <option value="Prayer Follow-up" data-t="prayerFollowup">Prayer Follow-up</option>
+                  <option value="Prayer Follow-up" data-t="prayerFollowup">Partnership</option>
                   <option value="Invite to Event" data-t="inviteEvent">Invite to Event</option>
                 </select>
               </div>
-            </div>
             <div class="field">
               <label data-t="ministryLabel">Ministries Promoted</label>
-              <input type="text" id="fv-ministry" data-t-ph="ministryPh"
-                placeholder="Which ministries were shared..." />
-            </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; padding:8px; border:1px solid var(--gray-300); border-radius:var(--radius); background:var(--white);">
+                  <label style="display:flex; align-items:center; gap:4px; font-weight:400;">
+                    <input type="checkbox" value="Home Group"> Home Group
+                  </label>
+                  <label style="display:flex; align-items:center; gap:4px; font-weight:400;">
+                    <input type="checkbox" value="Scripture Engagement"> Scripture Engagement
+                  </label>
+                  <label style="display:flex; align-items:center; gap:4px; font-weight:400;">
+                    <input type="checkbox" value="TTB Nepali App"> TTB Nepali App
+                  </label>
+                  <label style="display:flex; align-items:center; gap:4px; font-weight:400;">
+                    <input type="checkbox" value="Social Media"> Social Media
+                  </label>
+                  <label style="display:flex; align-items:center; gap:4px; font-weight:400;">
+                    <input type="checkbox" value="Radio FM"> Radio FM
+                  </label>
+                  <label style="display:flex; align-items:center; gap:4px; font-weight:400;">
+                    <input type="checkbox" value="Bible Quiz"> Bible Quiz
+                  </label>
+                </div>
+              </div>
             <div class="field">
               <label data-t="responseLabel">People Response</label>
               <select id="fv-response">
@@ -180,17 +187,17 @@
               </select>
             </div>
             <div class="field">
-              <label data-t="testimonyLabel">Short Testimony / Story</label>
-              <textarea id="fv-testimony" data-t-ph="testimonyPh"
-                placeholder="Share a brief testimony from the field..."></textarea>
-            </div>
-            <div class="field">
               <label data-t="prayerLabel">Prayer Requests</label>
               <textarea id="fv-prayer" data-t-ph="prayerPh" placeholder="Prayer needs from this visit..."></textarea>
             </div>
             <div class="field">
               <label data-t="commentsLabel">Comments / Remarks</label>
               <textarea id="fv-comments" data-t-ph="commentsPh" placeholder="Any additional observations..."></textarea>
+            </div>
+            <div class="field">
+              <label data-t="testimonyLabel">Short Testimony / Story</label>
+              <textarea id="fv-testimony" data-t-ph="testimonyPh"
+                placeholder="Share a brief testimony from the field..."></textarea>
             </div>
             <div class="field">
               <label data-t="photoLabel">Photo / Audio Upload</label>
