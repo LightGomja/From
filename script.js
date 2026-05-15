@@ -1,15 +1,23 @@
 const DOC_ID = 'gtGKiqrdhWXxAuim2H8BwU';
 const API_KEY = '2a16785635fde61f552fed86c669207aef693d5b';
-const BASE = `https://gomja24.getgrist.com/api/docs/${DOC_ID}/tables`;
+// const BASE = `https://cors-anywhere.herokuapp.com/https://gomja24.getgrist.com/api/docs/${DOC_ID}/tables`;
+// const BASE = `https://gomja24.getgrist.com/api/docs/${DOC_ID}/tables`;
+
+// const DOC_ID = 'gtGKiqrdhWXx.....';
+// const API_KEY = '2a16785635552fed86c........';
+// const BASE = `https://gomja24.getgrist.com/api/docs/gtGKiqrdhWXx......`;
+
+// =============================================
+// API CONFIG — key is hidden in Cloudflare Worker
+// =============================================
+const BASE = 'https://ttbfieldform.mishyalgomlightcommunication.workers.dev/';
 
 async function fetchAll(table) {
   try {
-    const res = await fetch(`${BASE}/${encodeURIComponent(table)}/records`, {
-      headers: { Authorization: `Bearer ${API_KEY}` }
-    });
+    const res = await fetch(`${BASE}/${encodeURIComponent(table)}/records`);
     if (!res.ok) throw new Error(`fetchAll(${table}) failed: ${res.status}`);
     const data = await res.json();
-    return data.records || []; // already [{ id, fields: {...} }]
+    return data.records || [];
   } catch (e) {
     console.error(e);
     return [];
@@ -20,10 +28,7 @@ async function addRecord(table, fields) {
   try {
     const res = await fetch(`${BASE}/${encodeURIComponent(table)}/records`, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ records: [{ fields }] })
     });
     if (!res.ok) throw new Error(`addRecord(${table}) failed: ${res.status}`);
@@ -294,12 +299,12 @@ function searchExecs(inputId, resultsId, hiddenId) {
   const results = document.getElementById(resultsId);
   document.getElementById(hiddenId).value = '';
   if (q.length < 1) { results.classList.remove('open'); return; }
-  const matches = execCache.filter(r => r.fields.Name && r.fields.Name.toLowerCase().includes(q));
+  const matches = execCache.filter(r => r.fields.Staff_Name && r.fields.Staff_Name.toLowerCase().includes(q));
   renderResults(results, matches, r => ({
-    main: r.fields.Name,
+    main: r.fields.Staff_Name,
     sub: r.fields.Ministry_Area || ''
   }), (r) => {
-    document.getElementById(inputId).value = r.fields.Name;
+    document.getElementById(inputId).value = r.fields.Staff_Name;
     document.getElementById(hiddenId).value = r.id;
     results.classList.remove('open');
   });
@@ -458,6 +463,7 @@ function addContact() {
           <label>${t('roleLabel')}</label>
           <select id="fv-role-${cc}">
             <option value="Pastor">${t('pastor')}</option>
+            <option value="Elder">${t('Elder')}</option>
             <option value="Deacon">${t('deacon')}</option>
             <option value="Member">${t('member')}</option>
           </select>
@@ -466,14 +472,19 @@ function addContact() {
       <div class="two-col">
         <div class="field">
           <label>${t('ageLabel')}</label>
-          <input type="number" id="fv-age-${cc}" min="1" max="150" placeholder="${t('agePh')}"/>
+          <select id="fv-age-${cc}">
+            <option value="13-18">13-18</option>
+            <option value="19-30">19-30</option>
+            <option value="31-45">31-45</option>
+            <option value="46-59">46-59</option>
+            <option value="60+">60+</option>
+          </select>
         </div>
         <div class="field">
           <label>${t('genderLabel')}</label>
           <select id="fv-gender-${cc}">
             <option value="Male">${t('male')}</option>
             <option value="Female">${t('female')}</option>
-            <option value="Other">${t('other')}</option>
           </select>
         </div>
       </div>
@@ -666,9 +677,9 @@ async function submitFieldVisit() {
 async function processFieldVisit(d) {
   let execId = d.execId;
   if (!execId) {
-    const r = await findOrCreate('Staff',
-      { Name: d.execName, Phine_Number: '', Ministry_Area: '', gmail_id: '' },
-      f => f.Name === d.execName
+    const r = await findOrCreate('Field Executive staff',
+      { Staff_Name: d.execName, Phine_Number: '', Ministry_Area: '', gmail_id: '' },
+      f => f.Staff_Name === d.execName
     );
     execId = r.id;
   }
