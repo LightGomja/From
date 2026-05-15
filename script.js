@@ -10,7 +10,7 @@ const API_KEY = '2a16785635fde61f552fed86c669207aef693d5b';
 // =============================================
 // API CONFIG — key is hidden in Cloudflare Worker
 // =============================================
-const BASE = 'https://ttbfieldform.mishyalgomlightcommunication.workers.dev/';
+const BASE = 'https://ttbfieldform.mishyalgomlightcommunication.workers.dev';
 
 async function fetchAll(table) {
   try {
